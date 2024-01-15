@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from splash import splashscreen  # Replace 'my_module' with the actual module name
+from splash import splashscreen  
 
 def test_splashscreen_start():
     with patch("builtins.input", return_value="start"):

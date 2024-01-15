@@ -1,6 +1,5 @@
 import pytest
-from wizard import Wizard  # assuming your main code is in a file named wizard.py
-
+from wizard import Wizard 
 
 def test_create_phase():
     wizard = Wizard()
@@ -24,7 +23,6 @@ def test_prev_or_next():
 
 
 def test_start_wizard():
-    # You may need to modify this test based on the actual behavior of your start_wizard function
     wizard = Wizard()
     wizard.start_wizard()
 
