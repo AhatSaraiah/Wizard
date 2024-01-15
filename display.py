@@ -71,4 +71,3 @@ def show_wizards_history(wizard):
             print(tabulate([list(user.values()) for user in sorted_wizards], headers=headers))
         else:
             print("Invalid choice. Please enter a number between 1 and 11 or '0' to cancel.")
-
