@@ -12,7 +12,6 @@ def test_input_validation():
     with pytest.raises(ValueError):
         phase.input_validation("Invalid Name", phase.validation_functions["Name"])
 
-    # Add more test cases for other validation functions
 
 def test_run_phase():
     wizard = Wizard()
@@ -24,7 +23,6 @@ def test_run_phase():
     assert wizard.details["Email"] is not None
     assert wizard.details["Birth Date"] is not None
 
-    # Add more test cases for other phases
 
 def test_update():
     wizard = Wizard()
