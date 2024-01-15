@@ -18,6 +18,7 @@ class Wizard:
 
         }
         self.phases = []
+        self.users = []
 
 
     def check_if_update(self,phase):
@@ -79,14 +80,16 @@ class Wizard:
     def start_wizard(self):
         print("Welcome to the Wizard!")
         while True:
-            choice = input("Menu: 1) Start New 2) Continue: ")
+            choice = input("Menu: 1) Start New 2) Continue: 3) History")
             if choice == "1":
                 self.create_phase(1)
                 if_done = self.prev_or_next(1)
                 if if_done == 'done':
                     display.display_summary(self.details)
-                    if display.get_rest()==True:
+                    self.users.append(self.details)
+                    if display.get_reset()==True:
                         self.phases = []
+                        self.details = {}
 
 
             elif choice == "2":
@@ -98,6 +101,12 @@ class Wizard:
                     self.create_phase(phase_number)
                 else:
                     print("You can't access this phase yet. Please complete previous phases.")
+            
+            elif choice == "3":
+                display.show_wizards_history(self)
+                
             else:
                 print("Invalid choice!")
+
+
 
