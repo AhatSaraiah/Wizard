@@ -10,3 +10,6 @@ def test_splashscreen_invalid_input():
     with patch("builtins.input", return_value="invalid_input"):
         assert splashscreen() is None
 
+
+        
+

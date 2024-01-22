@@ -1,4 +1,4 @@
-#
+
 import splash
 from wizard import Wizard
 from phase import Phase
