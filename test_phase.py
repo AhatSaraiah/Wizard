@@ -10,8 +10,6 @@ from phase import Phase
 phase = Phase(4)
 functions =phase.validation_functions
 
-# test validation of all inputs i the phses ,
-# once with valid input ,another with invalid input
 
 @pytest.mark.parametrize("user_input,func,expected_output", [
     ("ahat aa",functions["Name"], "ahat aa"),
@@ -36,6 +34,14 @@ functions =phase.validation_functions
     ('a',functions["One Dollar"], "Invalid input"),
 ])
 def test_input_validation(user_input,func,expected_output):
+    '''
+    Test input validation for various user inputs and functions.
+
+    Parameters:
+    - user_input (str): The user input to be tested.
+    - func (callable): The validation function to be applied to the user input.
+    - expected_output (str): The expected output after applying the validation function.
+    '''
 
     result = phase.check_input(user_input,func)
     assert result == expected_output
@@ -43,7 +49,6 @@ def test_input_validation(user_input,func,expected_output):
 
 
 
-# test updating with valid and invalid inputs
 @pytest.mark.parametrize("choice,phase_attributes,user_input", [
     ("Name", ["Name", "Email", "Birth Date"],"ahat aaaaaa"),
     ("Nam", ["Name", "Email", "Birth Date"],"ahat aaaaaa"),
@@ -52,9 +57,15 @@ def test_input_validation(user_input,func,expected_output):
 
 ])
 def test_update(choice,phase_attributes,user_input):
-    # phase = Phase(1)
+    '''
+    Test updating wizard details with valid and invalid inputs.
+
+    Parameters:
+    - choice (str): The field to be updated in the wizard's details.
+    - phase_attributes (list): List of attributes associated with the chosen phase.
+    - user_input (str): The user input to update the chosen field in the wizard's details.
+    '''
     wizard = Wizard()
-    # Example of updating a field
     phase.update_phase_field(wizard, choice, phase_attributes,user_input)
     assert wizard.details[choice] == user_input
 

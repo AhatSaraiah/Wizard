@@ -35,7 +35,7 @@ def test_display_summary(example_details,capsys):
         display_summary(example_details)
         captured = capsys.readouterr()
 
-    assert captured
+    assert captured 
 
 def test_show_phase(example_details, capsys):
     show_phase(1, example_details)
