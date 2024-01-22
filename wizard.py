@@ -41,9 +41,10 @@ class Wizard:
         self.check_if_update(phase)
 
 
-    def prev_or_next(self,num_phase):
+    def prev_or_next(self, num_phase,move=None):
         while True:
-            move = input(f"You in Phase {num_phase} ,Type (1) for Next  / (2) for Prev : ")
+            if move is None:
+                move = input(f"You in Phase {num_phase} ,Type (1) for Next  / (2) for Prev : ")
             if move == "1":
                 if num_phase == 1:
                     num_phase += 1
@@ -51,42 +52,46 @@ class Wizard:
                 if num_phase == 2:
                     num_phase += 1
                     self.create_phase(num_phase)
+
                 if num_phase == 3:
                     self.create_phase(num_phase + 1)
                     return 'done'
             elif move == "2":
                 if num_phase == 1:
                     print('You in Phase 1, You cant prev')
-                    display.show_phase(num_phase , self.details)
-                    self.check_if_update(self.phases[num_phase-1])
+                    display.show_phase(num_phase, self.details)
+                    self.check_if_update(self.phases[num_phase - 1])
                 elif num_phase == 2:
                     num_phase -= 1
                     print('You in Phase 1')
                     display.show_phase(num_phase, self.details)
-                    self.check_if_update(self.phases[num_phase-1])
+                    self.check_if_update(self.phases[num_phase - 1])
                 elif num_phase == 3:
                     num_phase -= 1
                     print('You in Phase 2')
-                    display.show_phase(num_phase , self.details)
-                    self.check_if_update(self.phases[num_phase-1])
+                    display.show_phase(num_phase, self.details)
+                    self.check_if_update(self.phases[num_phase - 1])
                 elif num_phase == 4:
-                   print('You in Phase 3')
-                   display.show_phase(num_phase -1 , self.details)
-                   self.check_if_update(self.phases[num_phase-2])
+                    print('You in Phase 3')
+                    display.show_phase(num_phase - 1, self.details)
+                    self.check_if_update(self.phases[num_phase - 2])
             else:
                 print("Invalid choice. Please enter '1' to continue Next or '2' to Prev.")
 
 
-    def start_wizard(self):
+    def start_wizard(self,choice = None):
         print("Welcome to the Wizard!")
         while True:
-            choice = input("Menu: 1) Start New 2) Continue: 3) History")
+            if choice is None:
+                choice = input("Menu: 1) Start New 2) Continue: 3) History")
             if choice == "1":
                 self.create_phase(1)
                 if_done = self.prev_or_next(1)
                 if if_done == 'done':
                     display.display_summary(self.details)
                     self.users.append(self.details)
+                    # db.add_to_data(self.details) 
+
                     if display.get_reset()==True:
                         self.phases = []
                         self.details = {}
@@ -107,6 +112,5 @@ class Wizard:
                 
             else:
                 print("Invalid choice!")
-
 
 

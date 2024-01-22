@@ -7,30 +7,55 @@ class Phase:
         "Name": lambda x: len(x.split()) == 2 and all(len(name) >= 2 for name in x.split()),
         "Email": lambda x: len(x) > 0 and re.match(r"[^@]+@[^@]+\.[^@]+", x),
         "Birth Date": lambda x: len(x) > 0 and len(x.split('/')) == 3,
-        "City": lambda x: len(x) > 0,
-        "Street": lambda x: len(x) > 0,
+        "City": lambda x: len(x) > 0 and x.isdigit() ==False,
+        "Street": lambda x: len(x) > 0 and x.isdigit() ==False,
         "Number": lambda x: x.isnumeric() and int(x) != 0 and int(x) > 0,
-        "Social Media": lambda x: re.compile(r'^(https?://)?(www\.)?(facebook|twitter|instagram|linkedin)\.com/.*$'),
+        "Social Media": lambda x: re.match(r'^(https?://)?(www\.)?(facebook|twitter|instagram|linkedin)\.com/.*$',x),
         "Hobbies": lambda x: True,
-        "Happy": lambda x: x=='Yes' or x=='No',  
-        "Skydiving": lambda x: x=='Yes' or x=='Maybe' or x=='No', 
-        "One Dollar": lambda x: x=='Yes' or x=='No'  
-
+        "Happy": lambda x: x=='yes' or x=='no',  
+        "Skydiving": lambda x: x=='yes' or x=='maybe' or x=='no', 
+        "One Dollar": lambda x: x=='yes' or x=='no' 
         }
     
 
-    def input_validation(self,string,func=0):
+    # def input_validation(self,string,func=0):
+    #     while True:
+    #         print(string , end='')
+    #         if func:
+    #             user_input=input()
+    #             if func(user_input):
+    #                 return user_input
+    #             else:
+    #                 print("Invalid input. Please enter it again.")
+
+
+            
+    def input_validation(self,string,func=0,user_input=None):
         while True:
             print(string , end='')
             if func:
-                user_input=input()
-                if func(user_input):
+                # user_input=input()
+                if user_input is None:
+                    user_input= self.check_input(input(),func)
+                else:
+                    user_input= self.check_input(user_input,func)
+                if user_input!="Invalid input":
                     return user_input
                 else:
                     print("Invalid input. Please enter it again.")
             else:
                 user_input=input()
                 return user_input
+
+    
+    def check_input(self,user_input,func):
+      
+            if func(user_input):
+                return user_input
+            else:
+                return "Invalid input"
+
+
 
     def run_phase(self,wizard):
         if self.num_phase==1:
@@ -49,6 +74,12 @@ class Phase:
             wizard.details["Skydiving"]=self.input_validation(' Will you do skydiving? Yes/Maybe/No\n',self.validation_functions["Skydiving"])
             wizard.details["One Dollar"]=self.input_validation('Do you have $1 in you pocket now? Yes/No\n',self.validation_functions["One Dollar"])
 
+    
+    
+    
+    
+    
+    
     def update(self,wizard):
         '''
         Update a field in the wizard's details based on user input.
@@ -71,7 +102,7 @@ class Phase:
             self.update_phase_field(wizard, choice, ["Happy", "Skydiving", "One Dollar"])
 
 
-    def update_phase_field(self,wizard, choice,phase_attributes):
+    def update_phase_field(self,wizard, choice,phase_attributes,user_input=None):
         '''Update a field in the wizard's details if it belongs to the specified phase.
 
         Args: wizard (Wizard): The wizard instance.
@@ -81,7 +112,7 @@ class Phase:
         Returns:None
         '''
         if choice in phase_attributes:
-            wizard.details[choice] = self.input_validation(f'Enter your {choice}:\n', self.validation_functions[choice])
+            wizard.details[choice] = self.input_validation(f'Enter your {choice}:\n', self.validation_functions[choice],user_input)
             
         else:
             print("Invalid field choice.")
